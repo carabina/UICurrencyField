@@ -1,0 +1,11 @@
+use_frameworks!
+
+target 'UICurrencyField_Example' do
+  pod 'UICurrencyField', :path => '../'
+
+  target 'UICurrencyField_Tests' do
+    inherit! :search_paths
+
+    pod 'FBSnapshotTestCase' , '~> 2.1.4'
+  end
+end
