@@ -1,0 +1,22 @@
+{
+  "name": "UICurrencyField",
+  "version": "0.1.0",
+  "summary": "A short description of UICurrencyField.",
+  "description": "TODO: Add long description of the pod here.",
+  "homepage": "https://github.com/sivilaythomas/UICurrencyField",
+  "license": {
+    "type": "MIT",
+    "file": "LICENSE"
+  },
+  "authors": {
+    "sivilaythomas": "thomas.sivilay@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/sivilaythomas/UICurrencyField.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "8.0"
+  },
+  "source_files": "UICurrencyField/Classes/**/*"
+}

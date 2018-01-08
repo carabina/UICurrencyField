@@ -1,9 +1,12 @@
 # UICurrencyField
+The missing text field for currencies
 
 [![CI Status](http://img.shields.io/travis/sivilaythomas/UICurrencyField.svg?style=flat)](https://travis-ci.org/sivilaythomas/UICurrencyField)
 [![Version](https://img.shields.io/cocoapods/v/UICurrencyField.svg?style=flat)](http://cocoapods.org/pods/UICurrencyField)
 [![License](https://img.shields.io/cocoapods/l/UICurrencyField.svg?style=flat)](http://cocoapods.org/pods/UICurrencyField)
 [![Platform](https://img.shields.io/cocoapods/p/UICurrencyField.svg?style=flat)](http://cocoapods.org/pods/UICurrencyField)
+
+## Features
 
 ## Example
 
@@ -22,7 +25,7 @@ pod 'UICurrencyField'
 
 ## Author
 
-sivilaythomas, thomas.sivilay@gmail.com
+Thomas SIVILAY, @thomassivilay on Twitter.
 
 ## License
 
