@@ -33,6 +33,7 @@
 		BE14F2198CDB0DAD98A567981D21C7A1 /* FBSnapshotTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 39577E2B806B8B2D019998DE60728F63 /* FBSnapshotTestCase.m */; };
 		BEBFA04F9F0BBA48A000AC2DBA6095DA /* Pods-UICurrencyField_Tests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AB0D16B31980A5528894ABDE2955BD /* Pods-UICurrencyField_Tests-dummy.m */; };
 		BFCE460CC33E8872B7156D4166340178 /* FBSnapshotTestCasePlatform.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E3DB4D092B985E76E227F7F313C6981 /* FBSnapshotTestCasePlatform.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C8BDE0AF2004BF9C005A1830 /* UICurrencyFieldData.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8BDE0AE2004BF9C005A1830 /* UICurrencyFieldData.swift */; };
 		CAFA5E486BCE117A7D8C0FBF9DA6666B /* UIImage+Compare.h in Headers */ = {isa = PBXBuildFile; fileRef = 432938111B6FF0189EFFEDF2F845B308 /* UIImage+Compare.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		D0E853FFCC2C9C919A8ADA571CC7EBCB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C6E88A450A84E3957158B3B3459740AA /* Foundation.framework */; };
 		DB7A106243AC974FC7EBEB00B506C786 /* FBSnapshotTestCasePlatform.m in Sources */ = {isa = PBXBuildFile; fileRef = 58A2557E7CE20AACCD1B28B1CD1F920D /* FBSnapshotTestCasePlatform.m */; };
@@ -106,6 +107,7 @@
 		B92F9D16427167455A7B07D7FFF9BCE3 /* Pods-UICurrencyField_Example-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-UICurrencyField_Example-acknowledgements.markdown"; sourceTree = "<group>"; };
 		B9CEF7D6C5E08AB80E58DABC75D882BC /* UIImage+Diff.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImage+Diff.m"; path = "FBSnapshotTestCase/Categories/UIImage+Diff.m"; sourceTree = "<group>"; };
 		C6E88A450A84E3957158B3B3459740AA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS10.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		C8BDE0AE2004BF9C005A1830 /* UICurrencyFieldData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UICurrencyFieldData.swift; path = UICurrencyField/Classes/UICurrencyFieldData.swift; sourceTree = "<group>"; };
 		CC12BCFA3FC0B8C307F5B38C673EDD12 /* FBSnapshotTestCase-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "FBSnapshotTestCase-prefix.pch"; sourceTree = "<group>"; };
 		CCC9CCA294D059F18124D6AB50828BB9 /* Pods-UICurrencyField_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-UICurrencyField_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		D1D6208993FABB02D3E5557D830A0E98 /* Pods_UICurrencyField_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_UICurrencyField_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -322,6 +324,7 @@
 			isa = PBXGroup;
 			children = (
 				5BD72DA912CD6EBC0FEE863F04ED48A1 /* UICurrencyField.swift */,
+				C8BDE0AE2004BF9C005A1830 /* UICurrencyFieldData.swift */,
 				5643E08A2D2998513E1EBE12D2F48DDF /* Support Files */,
 			);
 			name = UICurrencyField;
@@ -518,6 +521,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				76FBF3FA1FC296C5660D4AD162C5DD6D /* UICurrencyField.swift in Sources */,
+				C8BDE0AF2004BF9C005A1830 /* UICurrencyFieldData.swift in Sources */,
 				EEFB96C0777BB6477C1A4E94CE108731 /* UICurrencyField-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

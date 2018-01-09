@@ -1,22 +1,10 @@
 import UIKit
 
-struct UICurrencyFieldData {
-    var int: String?
-    var decimal: String?
-}
-
 public protocol UICurrencyFieldDelegate: class {
     func should()
 }
 
 public final class UICurrencyField: UIControl {
-    
-    // MARK: - Nested
-    
-    public enum State {
-        case empty
-        case normal
-    }
     
     // MARK: - Properties
     
@@ -26,26 +14,32 @@ public final class UICurrencyField: UIControl {
         return true
     }
     
-    public var aState: State = .empty {
-        didSet {
-            render()
-        }
-    }
-    public var locale: Locale = .current {
-        didSet {
-            render()
-        }
-    }
-    public var amount: Double = 0
+    public var displayCursor: Bool = true
     
-    // Create an adapter to data, using text or number input parsing it to data
-    var data: UICurrencyFieldData = UICurrencyFieldData(int: nil, decimal: nil) {
+    public var locale: Locale {
+        set {
+            data.locale = locale
+        }
+        get {
+            return data.locale
+        }
+    }
+    public var amount: Double? {
+        set {
+            data = UICurrencyFieldData(raw: newValue)
+        }
+        get {
+            return data.raw
+        }
+    }
+    
+    private var data: UICurrencyFieldData = UICurrencyFieldData(raw: nil) {
         didSet {
             render()
         }
     }
     
-    var editingDecimal: Bool = false
+    private var editingDecimal: Bool = false
     
     // MARK: - Initializers
     
@@ -66,27 +60,25 @@ public final class UICurrencyField: UIControl {
     func render() {
         currencyLabel.text = locale.currencySymbol
         separatorLabel.text = locale.decimalSeparator
-        switch aState {
-        case .normal:
-            if let int = data.int  {
-                integerLabel.text = int
-                integerLabel.textColor = .black
-            }
+
+        if data.isEmpty {
+            integerLabel.text = "Placeholder"
+            integerLabel.textColor = .lightGray
+            decimalLabel.text = "00"
+            decimalLabel.textColor = .lightGray
+        } else {
+            integerLabel.text = data.formattedInt
+            integerLabel.textColor = .black
             
-            if let decimal = data.decimal, decimal.count > 0 {
+            if data.hasDecimal {
                 stackView.insertArrangedSubview(separatorLabel, at: 2)
                 stackView.insertArrangedSubview(decimalLabel, at: 3)
-                decimalLabel.text = decimal
+                decimalLabel.text = data.formattedDecimal
                 decimalLabel.textColor = .black
             } else {
                 separatorLabel.removeFromSuperview()
                 decimalLabel.removeFromSuperview()
             }
-        case .empty:
-            integerLabel.text = "00"
-            decimalLabel.text = "00"
-            integerLabel.textColor = .gray
-            decimalLabel.textColor = .gray
         }
     }
     
@@ -94,6 +86,9 @@ public final class UICurrencyField: UIControl {
     
     @objc func tapped() {
         becomeFirstResponder()
+        if displayCursor {
+            stackView.addArrangedSubview(cursor)
+        }
     }
     
     // MARK: - Private
@@ -157,18 +152,20 @@ public final class UICurrencyField: UIControl {
         return label
     }()
     
+    private lazy var cursor: UIView = {
+        let view = UIView()
+        view.backgroundColor = tintColor
+        view.widthAnchor.constraint(equalToConstant: 3).isActive = true
+        view.heightAnchor.constraint(equalToConstant: 24).isActive = true
+        return view
+    }()
+    
     public var keyboardType: UIKeyboardType = .decimalPad
 }
 
-// UITextInputTraits
 extension UICurrencyField: UIKeyInput {
     public var hasText: Bool {
-        switch aState {
-        case .empty:
-            return false
-        default:
-            return true
-        }
+        return data.isEmpty
     }
     
     public func insertText(_ text: String) {
@@ -178,27 +175,13 @@ extension UICurrencyField: UIKeyInput {
             return
         }
         
-        if let decimal = data.decimal, decimal.count > 0 {
-            data.decimal = decimal + text
-        } else if editingDecimal {
-            data.decimal = text
-        } else if let int = data.int {
-            data.int = int + text
-        } else {
-            data.int = text
-        }
+        data.add(text: text, decimal: editingDecimal)
+        print("INSERT TEXT \(text), CURRENT RAW DATA: \(data.raw)")
     }
     
     public func deleteBackward() {
-        if var decimal = data.decimal, decimal.count > 0 {
-            decimal.removeLast()
-            data.decimal = decimal
-            editingDecimal = decimal.count > 0
-        } else if var int = data.int, int.count > 0 {
-            editingDecimal = false
-            int.removeLast()
-            data.int = int
-        }
+        data.removeLast()
+        print("DELETE BACKWARD, CURRENT RAW DATA: \(data.raw)")
     }
 }
 

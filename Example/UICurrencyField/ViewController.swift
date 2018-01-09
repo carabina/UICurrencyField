@@ -15,7 +15,6 @@ final class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        currencyField.aState = .normal
         currencyField.amount = 1034.213
     }
 }
