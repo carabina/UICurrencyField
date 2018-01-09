@@ -19,6 +19,7 @@ struct UICurrencyFieldData {
             self.decimalPart = ""
         }
         self.formatter = NumberFormatter()
+        self.formatter.numberStyle = .decimal
     }
     
     var locale: Locale = .current {

@@ -8,13 +8,13 @@ public final class UICurrencyField: UIControl {
     
     // MARK: - Properties
     
-    weak var delegate: UICurrencyFieldDelegate?
+    public weak var delegate: UICurrencyFieldDelegate?
     
     public override var canBecomeFirstResponder: Bool {
         return true
     }
     
-    public var displayCursor: Bool = true
+    public var displayCursor: Bool = false
     
     public var locale: Locale {
         set {
@@ -64,8 +64,8 @@ public final class UICurrencyField: UIControl {
         if data.isEmpty {
             integerLabel.text = "Placeholder"
             integerLabel.textColor = .lightGray
-            decimalLabel.text = "00"
-            decimalLabel.textColor = .lightGray
+            separatorLabel.removeFromSuperview()
+            decimalLabel.removeFromSuperview()
         } else {
             integerLabel.text = data.formattedInt
             integerLabel.textColor = .black
@@ -170,12 +170,15 @@ extension UICurrencyField: UIKeyInput {
     
     public func insertText(_ text: String) {
         if text == locale.decimalSeparator || text == "," {
+            if data.isEmpty {
+                data.add(text: "0")
+            }
             editingDecimal = true
             stackView.insertArrangedSubview(separatorLabel, at: 2)
             return
         }
-        
         data.add(text: text, decimal: editingDecimal)
+        editingDecimal = false
         print("INSERT TEXT \(text), CURRENT RAW DATA: \(data.raw)")
     }
     
