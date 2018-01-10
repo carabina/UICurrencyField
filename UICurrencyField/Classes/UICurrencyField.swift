@@ -17,26 +17,19 @@ public final class UICurrencyField: UIControl {
     public var displayCursor: Bool = false
     
     public var locale: Locale {
-        set {
-            data.locale = locale
-        }
-        get {
-            return data.locale
-        }
+        set { data.locale = locale }
+        get { return data.locale }
     }
     public var amount: Double? {
-        set {
-            data = UICurrencyFieldData(raw: newValue)
-        }
-        get {
-            return data.raw
-        }
+        set { data = UICurrencyFieldData(raw: newValue) }
+        get { return data.raw }
     }
+    public var maxDecimals: Int = 2
+    public var minDecimals: Int = 0
+    // needs to fill decimals on edit end
     
     private var data: UICurrencyFieldData = UICurrencyFieldData(raw: nil) {
-        didSet {
-            render()
-        }
+        didSet { render() }
     }
     
     private var editingDecimal: Bool = false
@@ -177,14 +170,15 @@ extension UICurrencyField: UIKeyInput {
             stackView.insertArrangedSubview(separatorLabel, at: 2)
             return
         }
-        data.add(text: text, decimal: editingDecimal)
-        editingDecimal = false
-        print("INSERT TEXT \(text), CURRENT RAW DATA: \(data.raw)")
+        if data.nbDecimals < maxDecimals {
+            data.add(text: text, decimal: editingDecimal)
+            editingDecimal = false
+            print("INSERT TEXT \(text), CURRENT RAW DATA: \(data.raw)")
+        }
     }
     
     public func deleteBackward() {
         data.removeLast()
-        print("DELETE BACKWARD, CURRENT RAW DATA: \(data.raw)")
     }
 }
 
@@ -195,7 +189,6 @@ extension UICurrencyField: UITextInputTraits {
 }
 
 extension UICurrencyField: UIGestureRecognizerDelegate {
-    
     public func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
         return touch.view == gestureRecognizer.view
     }

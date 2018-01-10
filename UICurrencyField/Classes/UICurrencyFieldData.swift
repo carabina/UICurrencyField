@@ -7,6 +7,9 @@ struct UICurrencyFieldData {
             return Double(str) ?? 0
         }
     }
+    var nbDecimals: Int {
+        return decimalPart.count
+    }
     
     init(raw: Double?) {
         if let raw = raw {
