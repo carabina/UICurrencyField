@@ -17,8 +17,12 @@ final class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        currencyField.locale = Locale(identifier: "fr_FR")
         currencyField.amount = 1034.213
         currencyField.currencyIndicator = .symbol
+        currencyField.currencyTextColor = .blue
+        currencyField.integerTextColor = .green
+        currencyField.decimalTextColor = .red
     }
     
     @objc private func dismissKeyboard() {

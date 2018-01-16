@@ -37,7 +37,16 @@ public final class UICurrencyField: UIControl {
     public var currencyIndicator: CurrencyIndicator = .code {
         didSet { render() }
     }
-    
+    public var currencyTextColor: UIColor = .black {
+        didSet { render() }
+    }
+    public var integerTextColor: UIColor = .black {
+        didSet { render() }
+    }
+    public var decimalTextColor: UIColor = .black {
+        didSet { render() }
+    }
+
     private var data: UICurrencyFieldData = UICurrencyFieldData(raw: nil) {
         didSet { render() }
     }
@@ -71,22 +80,24 @@ public final class UICurrencyField: UIControl {
     
     private func render() {
         currencyLabel.text = currencyIndicator == .symbol ? locale.currencySymbol : locale.currencyCode
+        currencyLabel.textColor = currencyTextColor
         separatorLabel.text = locale.decimalSeparator
         
         if data.isEmpty {
             integerLabel.text = "Placeholder"
-            integerLabel.textColor = .lightGray
+            
+            integerLabel.textColor = integerTextColor.withAlphaComponent(0.3)
             separatorLabel.removeFromSuperview()
             decimalLabel.removeFromSuperview()
         } else {
             integerLabel.text = data.formattedInt
-            integerLabel.textColor = .black
+            integerLabel.textColor = integerTextColor
             
             if data.hasDecimal {
                 stackView.insertArrangedSubview(separatorLabel, at: 2)
                 stackView.insertArrangedSubview(decimalLabel, at: 3)
                 decimalLabel.text = data.formattedDecimal
-                decimalLabel.textColor = .black
+                decimalLabel.textColor = decimalTextColor
             } else {
                 separatorLabel.removeFromSuperview()
                 decimalLabel.removeFromSuperview()
