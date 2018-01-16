@@ -18,6 +18,7 @@ final class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         currencyField.amount = 1034.213
+        currencyField.currencyIndicator = .symbol
     }
     
     @objc private func dismissKeyboard() {

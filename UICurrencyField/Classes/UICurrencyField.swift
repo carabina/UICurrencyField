@@ -6,6 +6,13 @@ public protocol UICurrencyFieldDelegate: class {
 
 public final class UICurrencyField: UIControl {
     
+    // MARK: - Nested
+    
+    public enum CurrencyIndicator {
+        case code
+        case symbol
+    }
+    
     // MARK: - Properties
     
     public weak var delegate: UICurrencyFieldDelegate?
@@ -27,6 +34,9 @@ public final class UICurrencyField: UIControl {
     public var maxDecimals: Int = 2
     public var minDecimals: Int = 0
     // needs to fill decimals on edit end
+    public var currencyIndicator: CurrencyIndicator = .code {
+        didSet { render() }
+    }
     
     private var data: UICurrencyFieldData = UICurrencyFieldData(raw: nil) {
         didSet { render() }
@@ -48,12 +58,21 @@ public final class UICurrencyField: UIControl {
         setUpConstraints()
     }
     
-    // MARK: - Instance Methods
+    // MARK: - Actions
     
-    func render() {
-        currencyLabel.text = locale.currencySymbol
+    @objc func tapped() {
+        becomeFirstResponder()
+        if displayCursor {
+            stackView.addArrangedSubview(cursor)
+        }
+    }
+    
+    // MARK: - Private
+    
+    private func render() {
+        currencyLabel.text = currencyIndicator == .symbol ? locale.currencySymbol : locale.currencyCode
         separatorLabel.text = locale.decimalSeparator
-
+        
         if data.isEmpty {
             integerLabel.text = "Placeholder"
             integerLabel.textColor = .lightGray
@@ -74,17 +93,6 @@ public final class UICurrencyField: UIControl {
             }
         }
     }
-    
-    // MARK: - Actions
-    
-    @objc func tapped() {
-        becomeFirstResponder()
-        if displayCursor {
-            stackView.addArrangedSubview(cursor)
-        }
-    }
-    
-    // MARK: - Private
     
     private func setUpView() {
         addSubview(stackView)
