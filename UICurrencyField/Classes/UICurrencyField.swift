@@ -35,17 +35,27 @@ public final class UICurrencyField: UIControl {
     public var minDecimals: Int = 0
     // needs to fill decimals on edit end
     public var currencyIndicator: CurrencyIndicator = .code {
-        didSet { render() }
+        didSet { currencyLabel.text = currencyIndicator == .symbol ? locale.currencySymbol : locale.currencyCode }
     }
     public var currencyTextColor: UIColor = .black {
-        didSet { render() }
+        didSet { currencyLabel.textColor = currencyTextColor }
     }
     public var integerTextColor: UIColor = .black {
-        didSet { render() }
+        didSet { integerLabel.textColor = integerTextColor }
     }
     public var decimalTextColor: UIColor = .black {
-        didSet { render() }
+        didSet { decimalLabel.textColor = decimalTextColor }
     }
+    public var currencyFont: UIFont = UIFont.preferredFont(forTextStyle: .title1) {
+        didSet { currencyLabel.font = currencyFont }
+    }
+    public var integerFont: UIFont = UIFont.preferredFont(forTextStyle: .title1) {
+        didSet { integerLabel.font = integerFont }
+    }
+    public var decimalFont: UIFont = UIFont.preferredFont(forTextStyle: .footnote) {
+        didSet { decimalLabel.font = decimalFont }
+    }
+
 
     private var data: UICurrencyFieldData = UICurrencyFieldData(raw: nil) {
         didSet { render() }
@@ -79,28 +89,42 @@ public final class UICurrencyField: UIControl {
     // MARK: - Private
     
     private func render() {
-        currencyLabel.text = currencyIndicator == .symbol ? locale.currencySymbol : locale.currencyCode
+        renderStyle()
+        renderData()
+    }
+    
+    private func renderStyle() {
         currencyLabel.textColor = currencyTextColor
-        separatorLabel.text = locale.decimalSeparator
         
         if data.isEmpty {
-            integerLabel.text = "Placeholder"
-            
             integerLabel.textColor = integerTextColor.withAlphaComponent(0.3)
             separatorLabel.removeFromSuperview()
             decimalLabel.removeFromSuperview()
         } else {
-            integerLabel.text = data.formattedInt
             integerLabel.textColor = integerTextColor
-            
+
             if data.hasDecimal {
                 stackView.insertArrangedSubview(separatorLabel, at: 2)
                 stackView.insertArrangedSubview(decimalLabel, at: 3)
-                decimalLabel.text = data.formattedDecimal
                 decimalLabel.textColor = decimalTextColor
             } else {
                 separatorLabel.removeFromSuperview()
                 decimalLabel.removeFromSuperview()
+            }
+        }
+    }
+    
+    private func renderData() {
+        currencyLabel.text = currencyIndicator == .symbol ? locale.currencySymbol : locale.currencyCode
+        separatorLabel.text = locale.decimalSeparator
+        
+        if data.isEmpty {
+            integerLabel.text = "Placeholder"
+        } else {
+            integerLabel.text = data.formattedInt
+            
+            if data.hasDecimal {
+                decimalLabel.text = data.formattedDecimal
             }
         }
     }
@@ -142,27 +166,10 @@ public final class UICurrencyField: UIControl {
         return stackView
     }()
     
-    private lazy var currencyLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    private lazy var integerLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .title1)
-        return label
-    }()
-    
-    private lazy var separatorLabel: UILabel = {
-        let label = UILabel()
-        return label
-    }()
-    
-    private lazy var decimalLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.preferredFont(forTextStyle: .footnote)
-        return label
-    }()
+    private var currencyLabel = UILabel()
+    private var integerLabel = UILabel()
+    private var separatorLabel = UILabel()
+    private var decimalLabel = UILabel()
     
     private lazy var cursor: UIView = {
         let view = UIView()
