@@ -1,7 +1,7 @@
 import UIKit
 
 public protocol UICurrencyFieldDelegate: class {
-    func should()
+    func currencyField(_ currencyField: UICurrencyField, valueChanged value: Double?)
 }
 
 public final class UICurrencyField: UIControl {
@@ -194,11 +194,13 @@ extension UICurrencyField: UIKeyInput {
             }
             editingDecimal = true
             stackView.insertArrangedSubview(separatorLabel, at: 2)
+            delegate?.currencyField(self, valueChanged: amount)
             return
         }
         if data.nbDecimals < maxDecimals {
             data.add(text: text, decimal: editingDecimal)
             editingDecimal = false
+            delegate?.currencyField(self, valueChanged: amount)
         }
     }
     
