@@ -55,7 +55,13 @@ public final class UICurrencyField: UIControl {
     public var decimalFont: UIFont = UIFont.preferredFont(forTextStyle: .footnote) {
         didSet { decimalLabel.font = decimalFont }
     }
-
+    public var placeholder: String = "00.00" {
+        didSet {
+            if data.isEmpty {
+                integerLabel.text = placeholder
+            }
+        }
+    }
 
     private var data: UICurrencyFieldData = UICurrencyFieldData(raw: nil) {
         didSet { render() }
@@ -119,7 +125,7 @@ public final class UICurrencyField: UIControl {
         separatorLabel.text = locale.decimalSeparator
         
         if data.isEmpty {
-            integerLabel.text = "Placeholder"
+            integerLabel.text = placeholder
         } else {
             integerLabel.text = data.formattedInt
             
