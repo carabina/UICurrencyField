@@ -199,7 +199,6 @@ extension UICurrencyField: UIKeyInput {
         if data.nbDecimals < maxDecimals {
             data.add(text: text, decimal: editingDecimal)
             editingDecimal = false
-            print("INSERT TEXT \(text), CURRENT RAW DATA: \(data.raw)")
         }
     }
     
